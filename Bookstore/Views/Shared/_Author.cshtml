@@ -1,0 +1,8 @@
+﻿@using Bookstore.Models;
+@model SearchByBook
+
+@using (Html.BeginForm("Author", "SearchByBook", FormMethod.Post))
+{
+    @Html.DropDownListFor(a => a.AuthorSelected, Model.AllBookOptions, "Select an Author", new { onchange = "document.location.href = '/Home/AuthorBrowse?id=' + this.options[this.selectedIndex].value;" });
+}
+

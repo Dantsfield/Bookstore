@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div class="container bodyBackground" style="width:50%">
+
+    <div class="index">
+        <div class="indexBox">
+            @Html.ActionLink("Browse by Inventory", "InventoryBrowse", "Home")<br />
+            <img src="~/Content/Images/inventory.jpg" />
+        </div>
+        <div class="indexBox">
+            @Html.ActionLink("Browse by Author", "AuthorBrowse", "Home")<br />
+            <img src="~/Content/Images/author.jpg" />
+        </div>
+        </div>
+        <div class="index">
+        <div class="indexBox">
+            @Html.ActionLink("Browse by Publisher", "PublisherBrowse", "Home")<br />
+            <img src="~/Content/Images/publisher.jpg" />
+        </div>
+        <div class="indexBox">
+            @Html.ActionLink("Browse by Location", "LocationBrowse", "Home")<br />
+            <img src="~/Content/Images/bookstore.jpg" />
+        </div>
+    </div>
+</div>

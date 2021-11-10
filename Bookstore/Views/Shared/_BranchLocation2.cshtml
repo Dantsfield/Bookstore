@@ -1,0 +1,9 @@
+﻿@using Bookstore.Models;
+@model SearchByBook
+
+@using (Html.BeginForm("Branch", "SearchByBranch", FormMethod.Post))
+{
+    @Html.DropDownListFor(a => a.BranchLocation, Model.AllBranchLocations, "Please Choose a Location", new { onchange = "document.location.href = '/Home/LocationBrowse?id=' + this.options[this.selectedIndex].value;" });
+    @Html.ValidationMessageFor(d => d.BranchLocation, "", new { @class = "text-danger" })
+}
+

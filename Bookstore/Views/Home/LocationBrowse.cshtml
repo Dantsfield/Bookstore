@@ -1,0 +1,69 @@
+﻿@using Bookstore.Models
+@model IEnumerable<BRANCH>
+@using System.Globalization;
+
+<h2 style="text-align:center">Browse by Location</h2>
+
+<aside class="sidebar">
+    <div style="display:inline-block">
+        @Html.Action("NavBar", "Home")
+    </div>
+</aside>
+
+<div class="body-content">
+    @Html.Action("Branch2", "SearchByBranch")
+    <br />
+</div>
+<div style="display:flex">
+    <div style="flex:35%">
+        <table style="">
+
+            @if (Model.Count() > 0)
+            {
+                var branch = Model.First();
+                <tr>
+                    <th>Branch Number</th>
+                    <td>@branch.BRANCH_NUM</td>
+                </tr>
+                <tr>
+                    <th>Branch Name</th>
+                    <td>@branch.BRANCH_NAME</td>
+                </tr>
+                <tr>
+                    <th>Branch Location</th>
+                    <td>@branch.BRANCH_LOCATION</td>
+                </tr>
+                <tr>
+                    <th>Number of Employees</th>
+                    <td>@branch.NUM_EMPLOYEES</td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div style="flex:65%">
+        @{
+            if (Model.Count() > 0)
+            {
+                var branch = Model.First();
+
+                // Captialize each word in the title.
+                TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+
+                <table>
+                    <tr>
+                        <th>Title</th>
+                        <th>Quantity On Hand</th>
+                    </tr>
+                    @foreach (var book in branch.INVENTORies)
+                    {
+                        string title = textInfo.ToTitleCase(book.BOOK.TITLE.ToString());
+                        <tr>
+                            <td> @Html.ActionLink(title, "BookDetails", new { id = book.BOOK_CODE.ToString() })</td>
+                            <td>@book.ON_HAND</td>
+                        </tr>
+                    }
+                </table>
+            }
+        }
+    </div>
+    </div>

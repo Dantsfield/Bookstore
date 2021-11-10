@@ -1,0 +1,28 @@
+﻿
+@using Bookstore.Models
+@model IEnumerable<BOOK>
+@{
+    ViewBag.Title = "Browse Inventory";
+}
+
+<div class="container bodyBackground">
+    <h2 style="text-align:center">@ViewBag.Title</h2>
+    <aside class="sidebar">
+        <div style="display:inline-block">
+            @Html.Action("NavBar", "Home")
+        </div>
+    </aside>
+
+    <div class="row" style="margin-left: 100px;">
+        @foreach (var book in Model)
+        {
+            string bookCode = book.BOOK_CODE.ToString();
+            <div class="bookDisplay">
+                <a href="BookDetails/@bookCode">
+                    <img src="~/Content/Images/@bookCode/thumb.jpg" />
+                </a>
+            </div>
+        }
+
+    </div>
+</div>

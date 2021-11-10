@@ -1,0 +1,90 @@
+﻿@model Bookstore.Models.ContactPage
+@using System.ComponentModel.DataAnnotations;
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+<script>
+    function ShowMessage(userData) {
+        var target = $("#userForm");
+        target.empty();
+
+        if (userData) {
+            target.append("<p>Your comments has been received. THANK YOU!</p>")
+        }
+        else {
+
+        }
+    }
+</script>
+
+@{
+    ViewBag.Title = "Contact";
+}
+<h2>Share Your Comments With Management</h2>
+<div class="body-content">
+    <div id="userForm">
+        @using (Ajax.BeginForm("FormFilled", "Home", new AjaxOptions
+        {
+            HttpMethod = "Post",
+            InsertionMode = InsertionMode.Replace,
+            OnSuccess = "ShowMessage"
+        }
+        ))
+        {
+            <table>
+                <tr>
+                    <td><label>First Name</label></td>
+                    <td><label>Last Name</label></td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.TextBoxFor(s => s.firstName)<br />
+                        @Html.ValidationMessageFor(model =>model.firstName, "", new { @class = "text-danger"})
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(s => s.lastName)<br />
+                        @Html.ValidationMessageFor(model => model.lastName, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Email Address</label></td>
+                    <td><label>Confirm Email</label></td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.TextBoxFor(s => s.email)<br />
+                        @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(s => s.confirmEmail)<br />
+                        @Html.ValidationMessageFor(model => model.confirmEmail, "", new { @class = "text-danger" })
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.Action("Branch", "SearchByBranch")
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.TextAreaFor(s => s.comments)<br />
+                        @Html.ValidationMessageFor(model => model.comments, "", new { @class = "text-danger" })
+
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    @Html.ValidationSummary(true)
+                    <td><input type="reset" value="Reset" /></td>
+                    <td><input type="submit" value="Save" /></td>
+                </tr>
+            </table>
+        }
+    </div>
+
+</div>
+

@@ -1,0 +1,81 @@
+﻿@model Bookstore.Models.BOOK
+@using System.Globalization;
+
+@{
+    // Get Author by using the first item in Wrotes, which only has 1 item in it.
+    string authorFirst = Model.WROTEs.First().AUTHOR.AUTHOR_FIRST.ToString();
+    string authorLast = Model.WROTEs.First().AUTHOR.AUTHOR_LAST.ToString();
+    string author = authorFirst + " " + authorLast;
+
+    var allLocations = Model.INVENTORies.Where(a => a.BOOK_CODE == Model.BOOK_CODE).ToList();
+
+    string bookCode = Model.BOOK_CODE.ToString();
+    string type = Model.TYPE.ToString();
+    string price = Model.PRICE.ToString();
+    string paperback = Model.PAPERBACK.ToString();
+    string publisher = Model.PUBLISHER.PUBLISHER_NAME.ToString();
+
+    // Captialize each word in the title.
+    TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+    string title = textInfo.ToTitleCase(Model.TITLE.ToString());
+
+
+    <aside class="sidebar">
+        <div style="display:inline-block">
+            @Html.Action("NavBar", "Home")
+        </div>
+    </aside>
+    <img src="~/Content/Images/@bookCode/large.jpg" class="bigBookImg" />
+    <aside class="bookDetails">
+        <table>
+            <tr>
+                <th>Title</th>
+                <td>@title</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>@type</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>$@price</td>
+            </tr>
+            <tr>
+                <th>Paperback?</th>
+                <td>@paperback</td>
+            </tr>
+            <tr>
+                <th>Publisher</th>
+                <td><a href=../PublisherBrowse/@Model.PUBLISHER_CODE>@publisher</a></td>
+            </tr>
+            <tr>
+                <th>Book Code</th>
+                <td>@bookCode</td>
+            </tr>
+            <tr>
+                <th>Written By</th>
+                <td><a href=../AuthorBrowse/@Model.WROTEs.First().AUTHOR_NUM>@author</a></td>
+            </tr>
+        </table>
+        <br />
+        <p style="text-align:center">Inventory by Location</p>
+        <table>
+            <tr>
+                <th>Location</th>
+                <th>On Hand Quantity</th>
+            </tr>
+            @foreach (var location in allLocations)
+            {
+                if (location.ON_HAND > 0)
+                {
+                    <tr>
+                        <td><a href=../LocationBrowse/@location.BRANCH_NUM>@location.BRANCH.BRANCH_NAME</a></td>
+                        <td>@location.ON_HAND.ToString()</td>
+                    </tr>
+                }
+
+            }
+        </table>
+    </aside>
+}
+

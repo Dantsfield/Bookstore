@@ -1,0 +1,54 @@
+﻿@using Bookstore.Models
+@model IEnumerable<BOOK>
+@using System.Globalization;
+
+<h2 style="text-align:center">Browse by Author</h2>
+
+<aside class="sidebar">
+    <div style="display:inline-block">
+        @Html.Action("NavBar", "Home")
+    </div>
+</aside>
+
+<div class="body-content">
+    @Html.Action("Author", "SearchByBook")
+</div>
+<div>
+
+    @{ 
+    if (Model != null && Model.Count() > 0)
+        {
+    <table>
+        <tr>
+            <th>Book Code</th>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Price</th>
+            <th>Paperback?</th>
+        </tr>
+            @foreach (var book in Model)
+            {
+                // Captialize each word in the title.
+                TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+                string title = textInfo.ToTitleCase(book.TITLE.ToString());
+
+                <tr>
+                    <td>@Html.ActionLink(book.BOOK_CODE, "BookDetails", new { id = book.BOOK_CODE.ToString() })</td>
+                    <td>@title</td>
+                    <td>@book.TYPE</td>
+                    <td>@book.PRICE</td>
+
+                    @if (book.PAPERBACK == "1")
+                    {
+                        <td>True</td>
+                    }
+                    else
+                    {
+                        <td>False</td>
+                    }
+                </tr>
+            }
+        </table>
+            }
+        }
+        </div>
